@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name = "flex_array"
   s.summary = "A flexible array class."
   s.description = 'A flexible array class. '
-  s.version = '0.2.0' 
+  s.version = '0.3.0' 
   s.author = ["Peter Camilleri"]
   s.email = "peter.c.camilleri@gmail.com"
   s.homepage = "http://teuthida-technologies.com/"

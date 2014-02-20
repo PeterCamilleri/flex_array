@@ -26,10 +26,9 @@ class FlexArray
   #<br>Returns
   #* The reshaped, flexible array.
   def reshape!(array_specs)
-    iterator = @array_data.cycle
-    temp = FlexArray.new(array_specs) {iterator.next}
-    @array_specs, @array_data, @dimensions = 
-      temp.array_specs, temp.array_data, temp.dimensions
+    temp = self.reshape(array_specs)
+    @array_specs, @array_data, @dimensions, @count = 
+      temp.array_specs, temp.array_data, temp.dimensions, temp.count
     self
   end
 

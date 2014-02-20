@@ -15,7 +15,7 @@ class FlexArrayTester < MiniTest::Unit::TestCase
   end
   
   def test_version_reporting
-    version = '0.2.0'
+    version = '0.3.0'
     f = FlexArray.new([3,3], 'test')
     
     assert_equal(version, FlexArray.version)

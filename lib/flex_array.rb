@@ -24,7 +24,7 @@ class FlexArray
   #<br>Returns
   #* A version string; <major>.<minor>.<step>
   def self.version
-    '0.2.0'
+    '0.3.0'
   end
 
   #The version of the class of this instance.
@@ -85,5 +85,10 @@ class FlexArray
     @dimensions = @array_specs.length
     @count      = @array_data.length
     self
+  end
+  
+  #Is this flex array empty?
+  def empty?
+    @count == 0
   end
 end

@@ -9,7 +9,7 @@ class FlexArray
   #* ArgumentError if the data may not be appended.
   def << (data)
     specs = get_append_specs(data = data.in_array)
-    data.array_data.each {|element| @array_data << element }
+    @array_data += data.array_data
     @array_specs[0].enlarge(specs[0].span)
     @count += data.count
     self

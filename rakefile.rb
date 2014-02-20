@@ -42,3 +42,20 @@ end
 task :reek do |t|
   `reek lib > reek.txt`
 end
+
+def eval_puts(str)
+  puts str
+  eval str
+end
+
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require_relative 'lib/flex_array'
+  eval_puts "@a = FlexArray.new([2,3,4]) {|i| i.clone}"
+  eval_puts "@b = FlexArray.new([2,3,4]) {|i| (i[0]+i[2])*(i[1] + i[2])}"
+  eval_puts "@c = FlexArray.new([0,3])"
+  eval_puts "@d = FlexArray.new([3,3]) {|i| i[0]*3 + i[1]}"
+  ARGV.clear
+  IRB.start
+end

@@ -7,6 +7,8 @@ class FlexArray
   #* true if the arrays are compatible.
   def compatible?(other)
     @array_specs == other.array_specs
+  rescue Exception
+    false
   end
 
   private
@@ -31,7 +33,7 @@ class FlexArray
   #* ArgumentError - raised on invalid dimension.
   def validate_dimension(dim)
     unless (0...@dimensions) === dim
-      fail ArgumentError, "Invalid dimesnsion selector: #{dim}"
+      fail ArgumentError, "Invalid dimension selector: #{dim}"
     end
   end
 end

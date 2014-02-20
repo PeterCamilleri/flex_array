@@ -1,18 +1,10 @@
 lib/flex_array.rb -- 0 warnings
 lib/flex_array/array.rb -- 0 warnings
 lib/flex_array/flex_array_append.rb -- 0 warnings
-lib/flex_array/flex_array_each.rb -- 11 warnings:
-  [91, 94]:FlexArray#_each_raw calls process_indexes(indexes) twice (DuplicateMethodCall)
-  [94]:FlexArray#_each_raw contains iterators nested 2 deep (NestedIterators)
-  [41, 44]:FlexArray#cycle calls @array_data[posn] twice (DuplicateMethodCall)
-  [41, 44]:FlexArray#cycle calls process_indexes(indexes) twice (DuplicateMethodCall)
-  [44]:FlexArray#cycle contains iterators nested 3 deep (NestedIterators)
-  [18, 21]:FlexArray#each calls @array_data[posn] twice (DuplicateMethodCall)
-  [18, 21]:FlexArray#each calls process_indexes(indexes) twice (DuplicateMethodCall)
-  [21]:FlexArray#each contains iterators nested 2 deep (NestedIterators)
-  [65, 68]:FlexArray#each_with_index calls @array_data[posn] twice (DuplicateMethodCall)
-  [65, 68]:FlexArray#each_with_index calls process_indexes(indexes) twice (DuplicateMethodCall)
-  [68]:FlexArray#each_with_index contains iterators nested 2 deep (NestedIterators)
+lib/flex_array/flex_array_each.rb -- 3 warnings:
+  [18, 45, 119]:FlexArray tests all_in at least 3 times (RepeatedConditional)
+  [115]:FlexArray#collect has approx 6 statements (TooManyStatements)
+  [48]:FlexArray#cycle contains iterators nested 2 deep (NestedIterators)
 lib/flex_array/flex_array_index.rb -- 0 warnings
 lib/flex_array/flex_array_new.rb -- 0 warnings
 lib/flex_array/flex_array_process.rb -- 3 warnings:
@@ -26,4 +18,4 @@ lib/flex_array/integer.rb -- 0 warnings
 lib/flex_array/object.rb -- 0 warnings
 lib/flex_array/range.rb -- 0 warnings
 lib/flex_array/spec_component.rb -- 0 warnings
-14 total warnings
+6 total warnings

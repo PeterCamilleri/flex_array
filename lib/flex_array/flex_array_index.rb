@@ -37,6 +37,8 @@ class FlexArray
   #  elements of the array, regardless of its dimensionality.
   def []=(*indexes, value)
     validate_all_or_index_count(indexes)
-    process_indexes(indexes) {|_index, posn| @array_data[posn] = value}
+    source = value.in_array.cycle
+    process_indexes(indexes) {|_index, posn| @array_data[posn] = source.next}
+    value
   end
 end
