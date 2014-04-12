@@ -1,5 +1,7 @@
 require 'in_array'
+require_relative 'flex_array/flex_array_forever'
 require_relative 'flex_array/spec_component'
+require_relative 'flex_array/spec_array'
 require_relative 'flex_array/object'
 require_relative 'flex_array/integer'
 require_relative 'flex_array/range'
@@ -19,6 +21,7 @@ require_relative 'flex_array/flex_array_process'
 class FlexArray
   include Enumerable
   include InArrayAlready
+
 
   #The version of this class.
   #<br>Returns
@@ -41,16 +44,23 @@ class FlexArray
   attr_accessor :array_data
 
   #The total number of elements in this array.
-  attr_reader :count
+  def length
+    @array_specs.spec_count
+  end
+
+  alias size length
 
   #The number of dimensions in this array.
-  attr_reader :dimensions
+  def dimensions
+    @array_specs.spec_dimensions
+  end
+
+  #Is this flex array transposed?
+  attr_reader :transposed
 
   #Get the limits of the subscripts of the flex array.
-  #<br>Returns
-  #* An array of dimension limits ranges.
   def limits
-    Array.new(@dimensions) {|dimension| @array_specs[dimension].range}
+    @array_specs.collect {|spec| spec.range }
   end
 
   #Return this flex array as a flex array!
@@ -79,16 +89,9 @@ class FlexArray
   def <=>(other)
     @array_data <=> other.array_data
   end
-  
-  #Update the count and dimensions variables
-  def update_count_and_dimensions
-    @dimensions = @array_specs.length
-    @count      = @array_data.length
-    self
-  end
-  
+
   #Is this flex array empty?
   def empty?
-    @count == 0
+    length == 0
   end
 end

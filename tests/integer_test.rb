@@ -1,4 +1,4 @@
-require_relative '../lib/flex_array/integer'
+require_relative '../lib/flex_array'
 require          'minitest/autorun'
 
 class IntegerTester < MiniTest::Unit::TestCase

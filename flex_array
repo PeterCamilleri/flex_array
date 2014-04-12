@@ -17,7 +17,9 @@
                 <File name="lib\flex_array\integer.rb" />
                 <File name="lib\flex_array\object.rb" />
                 <File name="lib\flex_array\range.rb" />
+                <File name="lib\flex_array\spec_array.rb" />
                 <File name="lib\flex_array\spec_component.rb" />
+                <File name="lib\flex_array\flex_array_forever.rb" />
             </Folder>
             <File name="lib\flex_array.rb" />
         </Folder>
@@ -92,6 +94,7 @@
             <File name="tests\integer_test.rb" />
             <File name="tests\object_test.rb" />
             <File name="tests\range_test.rb" />
+            <File name="tests\spec_array_test.rb" />
             <File name="tests\spec_component_test.rb" />
         </Folder>
         <File name=".gitignore" />

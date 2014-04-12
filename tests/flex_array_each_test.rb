@@ -14,10 +14,10 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     super(*all)
   end
 
-  def test_that_the_each_verbs_work
-    idx = []
-    q = FlexArray.new([3, 3]) {|i| idx << i.clone; i[0]*i[1]}
-    it = q.array_data.each
+  def test_each
+    d = [0,1,2,3,4,5,6,7,8]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    it = d.each
 
     result = q.each do |v|
       assert_equal(it.next, v)
@@ -26,188 +26,444 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     assert_equal(result, q)
 
     it = q.each
-    q.array_data.each do |v|
+
+    result = d.each do |v|
+      assert_equal(it.next, v)
+    end
+  end
+
+  def test_select_each
+    d = [0,1,2,3,4,5,6,7,8]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    it = d.each
+
+    result = q.select_each([:all]) do |v|
       assert_equal(it.next, v)
     end
 
-    it = q.array_data.each
-    it2 = idx.each
+    assert_equal(result, q)
+
+    it = q.select_each([:all])
+    d.each do |v|
+      assert_equal(it.next, v)
+    end
+
+    it = d.each
+
+    result = q.select_each([:all, :all]) do |v|
+      assert_equal(it.next, v)
+    end
+
+    d = [0,1,2]
+    it = d.each
+
+    result = q.select_each([0, :all]) do |v|
+      assert_equal(it.next, v)
+    end
+
+    d = [0,3,6]
+    it = d.each
+
+    result = q.select_each([:all, 0]) do |v|
+      assert_equal(it.next, v)
+    end
+  end
+
+  def test_each_with_index
+    d1 = [0,1,2,3,4,5,6,7,8]
+    d2 = [[0,0], [0,1], [0,2],
+          [1,0], [1,1], [1,2],
+          [2,0], [2,1], [2,2]]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    i1 = d1.each
+    i2 = d2.each
+
     q.each_with_index do |v, i|
-      assert_equal(it.next, v)
-      assert_equal(it2.next, i)
+      assert_equal(v, i1.next)
+      assert_equal(i, i2.next)
     end
 
-    it = q.each_with_index
-    it2 = idx.each
-    q.array_data.each do |v|
-      value, index = it.next
-      assert_equal(value, v)
-      assert_equal(it2.next, index)
-    end
+    iq = q.each_with_index
+    i2 = d2.each
 
-    it = (0...9).each
-    it2 = idx.each
-    q._each_raw do |d, index, p|
-      assert_equal(d.object_id, q.array_data.object_id)
-      assert_equal(it2.next, index)
-      assert_equal(it.next, p)
-    end
-
-    it = q._each_raw
-    it2 = idx.each
-    (0...9).each do |i|
-      d, index, p = it.next
-      assert_equal(d.object_id, q.array_data.object_id)
-      assert_equal(it2.next, index)
-      assert_equal(i, p)
+    d1.each do |v|
+      a,b = iq.next
+      assert_equal(a, v)
+      assert_equal(b, i2.next)
     end
   end
 
-  def test_that_the_indexed_each_verbs_work
-    q = FlexArray.new([3, 3]) {|i| i[0]*i[1]}
-    a = [0, 1, 2]
-    b = [[1,0], [1,1], [1,2]]
-    it = a.each
+  def test_select_each_with_index
+    d1 = [0,1,2,3,4,5,6,7,8]
+    d2 = [[0,0], [0,1], [0,2],
+          [1,0], [1,1], [1,2],
+          [2,0], [2,1], [2,2]]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    i1 = d1.each
+    i2 = d2.each
 
-    q.each([1, :all]) do |v|
-      assert_equal(it.next, v)
+    q.select_each_with_index([:all]) do |v, i|
+      assert_equal(v, i1.next)
+      assert_equal(i, i2.next)
     end
 
-    it = q.each([1, :all])
-    a.each do |v|
-      assert_equal(it.next, v)
+    iq = q.select_each_with_index([:all])
+    i2 = d2.each
+
+    d1.each do |v|
+      a,b = iq.next
+      assert_equal(a, v)
+      assert_equal(b, i2.next)
     end
 
-    it = a.each
-    it2 = b.each
-    q.each_with_index([1, :all]) do |v, i|
-      assert_equal(it.next, v)
-      assert_equal(it2.next, i)
+    i1 = d1.each
+    i2 = d2.each
+
+    q.select_each_with_index([:all, :all]) do |v, i|
+      assert_equal(v, i1.next)
+      assert_equal(i, i2.next)
     end
 
-    it = q.each_with_index([1, :all])
-    it2 = b.each
-    a.each do |v|
-      value, index = it.next
-      assert_equal(value, v)
-      assert_equal(it2.next, index)
+    iq = q.select_each_with_index([:all, :all])
+    i2 = d2.each
+
+    d1.each do |v|
+      a,b = iq.next
+      assert_equal(a, v)
+      assert_equal(b, i2.next)
     end
 
-    c = [3, 4, 5]
-    it = c.each
-    it2 = b.each
-    q._each_raw([1, :all]) do |d, index, p|
-      assert_equal(d.object_id, q.array_data.object_id)
-      assert_equal(it2.next, index)
-      assert_equal(it.next, p)
+    d1 = [0,1,2]
+    d2 = [[0,0], [0,1], [0,2]]
+
+    i1 = d1.each
+    i2 = d2.each
+
+    q.select_each_with_index([0, :all]) do |v, i|
+      assert_equal(v, i1.next)
+      assert_equal(i, i2.next)
     end
 
-    it = q._each_raw([1, :all])
-    it2 = b.each
-    c.each do |i|
-      d, index, p = it.next
-      assert_equal(d.object_id, q.array_data.object_id)
-      assert_equal(it2.next, index)
-      assert_equal(i, p)
+    d1 = [0,3,6]
+    d2 = [[0,0], [1,0], [2,0]]
+
+    i1 = d1.each
+    i2 = d2.each
+
+    q.select_each_with_index([:all, 0]) do |v, i|
+      assert_equal(v, i1.next)
+      assert_equal(i, i2.next)
     end
   end
 
-  def test_that_flex_array_cycle_works
-    a = FlexArray.new_from(3, [1,2,3])
-    r = []
-    it = a.cycle
-    10.times {r << it.next}
-    assert_equal([1,2,3,1,2,3,1,2,3,1], r)
+  def test_each_raw
+    d0 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    d1 = [100, 101, 102, 103, 104, 105, 106, 107, 108]
+    d2 = [[0,0], [0,1], [0,2],
+          [1,0], [1,1], [1,2],
+          [2,0], [2,1], [2,2]]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i0 = d0.each
+    i1 = d1.each
+    i2 = d2.each
 
-    a = FlexArray.new_from([2, 3], [1,2,3,4,5,6])
-    r = []
-    it = a.cycle([0, :all])
-    10.times {r << it.next}
-    assert_equal([1,2,3,1,2,3,1,2,3,1], r)
-
-    a = FlexArray.new_from([2, 3], [1,2,3,4,5,6])
-    r = []
-    it = a.cycle([1, :all])
-    10.times {r << it.next}
-    assert_equal([4,5,6,4,5,6,4,5,6,4], r)
-
-    a = FlexArray.new_from([2, 3], [1,2,3,4,5,6])
-    r = []
-    it = a.cycle([:all, 0])
-    10.times {r << it.next}
-    assert_equal([1,4,1,4,1,4,1,4,1,4], r)
-
-    a = FlexArray.new_from([2, 3], [1,2,3,4,5,6])
-    r = []
-    it = a.cycle([:all, 1])
-    10.times {r << it.next}
-    assert_equal([2,5,2,5,2,5,2,5,2,5], r)
-
-    a = FlexArray.new_from([2, 3], [1,2,3,4,5,6])
-    r = []
-    it = a.cycle([:all, 2])
-    10.times {r << it.next}
-    assert_equal([3,6,3,6,3,6,3,6,3,6], r)
-  end
-
-  def test_that_collect_works
-    a = FlexArray.new_from(3, [1,2,3])
-    b = a.collect {|v| v * v }
-    assert_equal([1,4,9], b)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    b = a.collect([0, :all]) {|v| v * v }
-    assert_equal([1,4,9], b)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    b = a.collect([1, :all]) {|v| v * v }
-    assert_equal([16,25,36], b)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    b = a.collect([:all, 0]) {|v| v * v }
-    assert_equal([1,16], b)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    b = a.collect([:all, 1]) {|v| v * v }
-    assert_equal([4,25], b)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    b = a.collect([:all, 2]) {|v| v * v }
-    assert_equal([9,36], b)
-  end
-
-  def test_that_collect_em_works
-    a = FlexArray.new_from(3, [1,2,3])
-    a.collect! {|v| v * v }
-    assert_equal([1,4,9], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    a.collect!([0, :all]) {|v| v * v }
-    assert_equal([1,4,9,4,5,6], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    a.collect!([1, :all]) {|v| v * v }
-    assert_equal([1,2,3,16,25,36], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    a.collect!([:all, 0]) {|v| v * v }
-    assert_equal([1,2,3,16,5,6], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    a.collect!([:all, 1]) {|v| v * v }
-    assert_equal([1,4,3,4,25,6], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    a.collect!([:all, 2]) {|v| v * v }
-    assert_equal([1,2,9,4,5,36], a.array_data)
-
-    a = FlexArray.new_from([2,3], [1,2,3,4,5,6])
-    assert_raises(ArgumentError) do
-      j = a.collect!
+    q._each_raw do |da, i, posn|
+      assert(da == q.array_data)
+      assert_equal(posn, i0.next)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
     end
 
-    assert_raises(ArgumentError) do
-      j = a.collect!([0, :all])
+    iq = q._each_raw
+    i1 = d1.each
+    i2 = d2.each
+
+    d0.each do |v|
+      da, i, posn = iq.next
+      assert(da == q.array_data)
+      assert_equal(posn, v)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
     end
+  end
+
+  def test_select_each_raw
+    d0 = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    d1 = [100, 101, 102, 103, 104, 105, 106, 107, 108]
+    d2 = [[0,0], [0,1], [0,2],
+          [1,0], [1,1], [1,2],
+          [2,0], [2,1], [2,2]]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i0 = d0.each
+    i1 = d1.each
+    i2 = d2.each
+
+    q._select_each_raw([:all]) do |da, i, posn|
+      assert(da == q.array_data)
+      assert_equal(posn, i0.next)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
+    end
+
+    i0 = d0.each
+    i1 = d1.each
+    i2 = d2.each
+
+    q._select_each_raw([:all, :all]) do |da, i, posn|
+      assert(da == q.array_data)
+      assert_equal(posn, i0.next)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
+    end
+
+    d0 = [0, 1, 2]
+    d1 = [100, 101, 102]
+    d2 = [[0,0], [0,1], [0,2]]
+
+    i0 = d0.each
+    i1 = d1.each
+    i2 = d2.each
+
+    q._select_each_raw([0, :all]) do |da, i, posn|
+      assert(da == q.array_data)
+      assert_equal(posn, i0.next)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
+    end
+
+    d0 = [0, 3, 6]
+    d1 = [100, 103, 106]
+    d2 = [[0,0], [1,0], [2,0]]
+
+    i0 = d0.each
+    i1 = d1.each
+    i2 = d2.each
+
+    q._select_each_raw([:all, 0]) do |da, i, posn|
+      assert(da == q.array_data)
+      assert_equal(posn, i0.next)
+      assert_equal(da[posn], i1.next)
+      assert_equal(i, i2.next)
+    end
+  end
+
+  def test_cycle
+    d = [0,1,2,3,4,5,6,7,8,0,1,2]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    i = 0
+
+    q.cycle do |v|
+      assert_equal(d[i], v)
+      i += 1
+      break if i == 12
+    end
+
+    iq = q.cycle
+
+    d.each do |v|
+      assert_equal(iq.next, v)
+    end
+  end
+
+  def test_select_cycle
+    d = [0,1,2,3,4,5,6,7,8,0,1,2]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    i = 0
+
+    q.select_cycle([:all]) do |v|
+      assert_equal(d[i], v)
+      i += 1
+      break if i == 12
+    end
+
+    iq = q.select_cycle([:all])
+
+    d.each do |v|
+      assert_equal(iq.next, v)
+    end
+
+    i = 0
+
+    q.select_cycle([:all, :all]) do |v|
+      assert_equal(d[i], v)
+      i += 1
+      break if i == 12
+    end
+
+    iq = q.select_cycle([:all, :all])
+
+    d.each do |v|
+      assert_equal(iq.next, v)
+    end
+
+    d = [0,1,2,0,1,2,0,1,2,0,1,2]
+    i = 0
+
+    q.select_cycle([0, :all]) do |v|
+      assert_equal(d[i], v)
+      i += 1
+      break if i == 12
+    end
+
+    iq = q.select_cycle([0, :all])
+
+    d.each do |v|
+      assert_equal(iq.next, v)
+    end
+
+    d = [0,3,6,0,3,6,0,3,6,0,3,6]
+    i = 0
+
+    q.select_cycle([:all, 0]) do |v|
+      assert_equal(d[i], v)
+      i += 1
+      break if i == 12
+    end
+
+    iq = q.select_cycle([:all, 0])
+
+    d.each do |v|
+      assert_equal(iq.next, v)
+    end
+  end
+
+  def test_collect
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+
+    b = q.collect {|v| v * v }
+    assert_equal(d, b)
+  end
+
+  def test_select_collect
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+
+    b = q.select_collect([:all]) {|v| v * v }
+    assert_equal(d, b)
+
+    b = q.select_collect([:all, :all]) {|v| v * v }
+    assert_equal(d, b)
+
+    d = [0,1,4]
+    b = q.select_collect([0, :all]) {|v| v * v }
+    assert_equal(d, b)
+
+    d = [0,9,36]
+    b = q.select_collect([:all, 0]) {|v| v * v }
+    assert_equal(d, b)
+  end
+
+  def test_collect_em
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    q.collect! {|v| v * v }
+    assert_equal(d, q.array_data)
+  end
+
+  def test_select_collect_em
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    q.select_collect!([:all]) {|v| v * v }
+    assert_equal(d, q.array_data)
+
+    d = [0,1,16,81,256,625,1296,2401,4096]
+    q.select_collect!([:all, :all]) {|v| v * v }
+    assert_equal(d, q.array_data)
+
+    d = [0,1,256,81,256,625,1296,2401,4096]
+    q.select_collect!([0, :all]) {|v| v * v }
+    assert_equal(d, q.array_data)
+
+    d = [0,1,256,6561,256,625,1679616,2401,4096]
+    q.select_collect!([:all, 0]) {|v| v * v }
+    assert_equal(d, q.array_data)
+  end
+
+  def test_find_index
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i = q.find_index(107)
+    assert_equal([2, 1], i)
+
+    i = q.find_index { |v| v > 106 }
+    assert_equal([2, 1], i)
+
+    i = q.find_index(300)
+    assert_equal(nil, i)
+
+    i = q.find_index { |v| v > 206 }
+    assert_equal(nil, i)
+  end
+
+  def test_select_find_index
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i = q.select_find_index([:all], 107)
+    assert_equal([2, 1], i)
+
+    i = q.select_find_index([:all, :all], 107)
+    assert_equal([2, 1], i)
+
+    i = q.select_find_index([0, :all], 107)
+    assert_equal(nil, i)
+
+    i = q.select_find_index([1, :all], 107)
+    assert_equal(nil, i)
+
+    i = q.select_find_index([2, :all], 107)
+    assert_equal([2, 1], i)
+
+    i = q.select_find_index([:all, 0], 107)
+    assert_equal(nil, i)
+
+    i = q.select_find_index([:all, 1], 107)
+    assert_equal([2, 1], i)
+
+    i = q.select_find_index([:all, 2], 107)
+    assert_equal(nil, i)
+  end
+
+  def test_find_indexes
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i = q.find_indexes(107)
+    assert_equal([[2, 1]], i)
+
+    i = q.find_indexes { |v| v == 107 }
+    assert_equal([[2, 1]], i)
+
+    i = q.find_indexes { |v| v > 106 }
+    assert_equal([[2, 1], [2, 2]], i)
+
+    i = q.find_indexes(307)
+    assert_equal([], i)
+
+    i = q.find_indexes { |v| v > 406 }
+    assert_equal([], i)
+  end
+
+  def test_select_find_indexes
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1] + 100}
+    i = q.select_find_indexes([:all], 107)
+    assert_equal([[2, 1]], i)
+
+    i = q.select_find_indexes([:all, :all], 107)
+    assert_equal([[2, 1]], i)
+
+    i = q.select_find_indexes([0, :all], 107)
+    assert_equal([], i)
+
+    i = q.select_find_indexes([1, :all], 107)
+    assert_equal([], i)
+
+    i = q.select_find_indexes([2, :all], 107)
+    assert_equal([[2, 1]], i)
+
+    i = q.select_find_indexes([:all, 0], 107)
+    assert_equal([], i)
+
+    i = q.select_find_indexes([:all, 1], 107)
+    assert_equal([[2, 1]], i)
+
+    i = q.select_find_indexes([:all, 2], 107)
+    assert_equal([], i)
   end
 end

@@ -11,7 +11,7 @@ class FlexArray
     validate_dimension(dim_a)
     validate_dimension(dim_b)
     @array_specs[dim_a], @array_specs[dim_b] = @array_specs[dim_b], @array_specs[dim_a]
-    @transposed = true
+    @transposed = @array_specs.transposed?
     self
   end
 

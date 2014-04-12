@@ -1,5 +1,3 @@
-require_relative 'spec_component'
-
 #Extensions to Object needed to support flex array.
 class Object
   #Fail with message since the array dimension is invalid.
@@ -10,7 +8,7 @@ class Object
   def to_spec_component(_stride)
     fail ArgumentError, "Invalid flex array dimension: #{self.inspect}"
   end
-  
+
   #Convert this object to an range index against the spec.
   #<br>Parameters
   #* spec - The spec component used to validate this index.
@@ -25,5 +23,5 @@ class Object
       fail IndexError, "Invalid subscript: #{self.inspect}"
     end
   end
-  
+
 end

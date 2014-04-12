@@ -1,14 +1,12 @@
 lib/flex_array.rb -- 0 warnings
 lib/flex_array/array.rb -- 0 warnings
 lib/flex_array/flex_array_append.rb -- 0 warnings
-lib/flex_array/flex_array_each.rb -- 3 warnings:
-  [18, 45, 119]:FlexArray tests all_in at least 3 times (RepeatedConditional)
-  [115]:FlexArray#collect has approx 6 statements (TooManyStatements)
-  [48]:FlexArray#cycle contains iterators nested 2 deep (NestedIterators)
+lib/flex_array/flex_array_each.rb -- 0 warnings
+lib/flex_array/flex_array_forever.rb -- 0 warnings
 lib/flex_array/flex_array_index.rb -- 0 warnings
 lib/flex_array/flex_array_new.rb -- 0 warnings
 lib/flex_array/flex_array_process.rb -- 3 warnings:
-  [89]:FlexArray#process_all_worker has approx 7 statements (TooManyStatements)
+  [90]:FlexArray#process_all_worker has approx 7 statements (TooManyStatements)
   [47]:FlexArray#process_indexes_worker has 4 parameters (LongParameterList)
   [47]:FlexArray#process_indexes_worker has approx 9 statements (TooManyStatements)
 lib/flex_array/flex_array_reshape.rb -- 0 warnings
@@ -17,5 +15,6 @@ lib/flex_array/flex_array_validate.rb -- 0 warnings
 lib/flex_array/integer.rb -- 0 warnings
 lib/flex_array/object.rb -- 0 warnings
 lib/flex_array/range.rb -- 0 warnings
+lib/flex_array/spec_array.rb -- 0 warnings
 lib/flex_array/spec_component.rb -- 0 warnings
-6 total warnings
+3 total warnings

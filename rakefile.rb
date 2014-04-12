@@ -4,7 +4,7 @@ require 'rdoc/task'
 
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = "rdoc"
-  rdoc.rdoc_files = ["lib/flex_array.rb", 
+  rdoc.rdoc_files = ["lib/flex_array.rb",
                      "lib/flex_array/flex_array_new.rb",
                      "lib/flex_array/flex_array_index.rb",
                      "lib/flex_array/flex_array_each.rb",
@@ -13,10 +13,12 @@ RDoc::Task.new do |rdoc|
                      "lib/flex_array/flex_array_transpose.rb",
                      "lib/flex_array/flex_array_process.rb",
                      "lib/flex_array/flex_array_validate.rb",
+                     "lib/flex_array/flex_array_forever.rb",
                      "lib/flex_array/object.rb",
                      "lib/flex_array/integer.rb",
                      "lib/flex_array/range.rb",
                      "lib/flex_array/array.rb",
+                     "lib/flex_array/spec_array.rb",
                      "lib/flex_array/spec_component.rb",
                      "license.txt", "README.txt"]
   rdoc.options << '--visibility' << 'private'
@@ -24,6 +26,7 @@ end
 
 Rake::TestTask.new do |t|
   t.test_files = ["tests/spec_component_test.rb",
+                  "tests/spec_array_test.rb",
                   "tests/object_test.rb",
                   "tests/integer_test.rb",
                   "tests/range_test.rb",

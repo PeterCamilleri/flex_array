@@ -16,19 +16,11 @@ class FlexArray
   #  in each time the block is called, so, if this parameter is to stored
   #  anywhere, it's best that it be cloned or duplicated first.
   def initialize(array_specs, default=nil, &init_block)
-    @array_specs, @count, @transposed = [], 1, false
-
-    #Parse the array limits.
-    array_specs.in_array.reverse_each do |spec|
-      @array_specs.insert(0, spec.to_spec_component(@count))
-      @count *= @array_specs[0].span
-    end
-
-    #Cache the dimensionality of the flex array.
-    @dimensions = @array_specs.length
+    @array_specs = SpecArray.new(array_specs.in_array)
+    @transposed = false
 
     #Allocate the data for the array.
-    @array_data = Array.new(@count, default)
+    @array_data = Array.new(@array_specs.spec_count, default)
 
     #Set up the array with the optional init_block.
     if init_block
@@ -39,6 +31,10 @@ class FlexArray
   alias_method :shallow_dup, :dup
 
   #Create a duplicate of this array.
+  #<br>Warning
+  #* The rdoc tool messes this up. shallow_dup is NOT an alias for this
+  #  dup, but rather the original system implementation of dup. This dup,
+  #  overrides the default dup and calls shallow_dup as part of its processing.
   def dup
     other = self.shallow_dup
     other.array_specs = @array_specs.dup
@@ -78,7 +74,7 @@ class FlexArray
   #* If the entire source array is to be used, use new_from instead.
   #* To make a copy of a flex array, use dup instead.
   def self.new_from_selection(array_specs, other, selection)
-    iterator = other.cycle(selection)
+    iterator = other.select_cycle(selection)
     FlexArray.new(array_specs) {iterator.next}
   end
 
@@ -93,6 +89,6 @@ class FlexArray
     result = FlexArray.new(0)
     result.array_specs = other.array_specs.dup
     result.array_data = other.array_data
-    result.update_count_and_dimensions
+    result
   end
 end

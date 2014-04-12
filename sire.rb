@@ -7,21 +7,33 @@ require 'pp'
 require_relative 'lib/flex_array'
 include Readline
 
-class Object 
+class Object
   def classes
     begin
       klass = self
-      
+
       begin
         klass = klass.class unless klass.instance_of?(Class)
         print klass
         klass = klass.superclass
         print " < " if klass
       end while klass
-      
+
       puts
     end
   end
+end
+
+def fp arr
+  lim = arr.limits
+  ec = lim[-1].max
+  pp lim
+  arr.each_with_index do |item, index|
+    print " #{item} "
+    puts if index[-1] == ec
+  end
+  puts
+  nil
 end
 
 def q
@@ -34,7 +46,7 @@ def eval_puts(str)
   puts str
   eval str
 end
- 
+
 puts "Welcome to SIRE for FlexArray"
 puts "Simple Interactive Ruby Environment"
 puts
@@ -66,4 +78,4 @@ until @done
   end
 end
 
-puts 
+puts
