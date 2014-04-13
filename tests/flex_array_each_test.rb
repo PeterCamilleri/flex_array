@@ -167,10 +167,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i1 = d1.each
     i2 = d2.each
 
-    q._each_raw do |da, i, posn|
-      assert(da == q.array_data)
+    q._each_raw do |i, posn|
       assert_equal(posn, i0.next)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
 
@@ -179,10 +178,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i2 = d2.each
 
     d0.each do |v|
-      da, i, posn = iq.next
-      assert(da == q.array_data)
+      i, posn = iq.next
       assert_equal(posn, v)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
   end
@@ -198,10 +196,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i1 = d1.each
     i2 = d2.each
 
-    q._select_each_raw([:all]) do |da, i, posn|
-      assert(da == q.array_data)
+    q._select_each_raw([:all]) do |i, posn|
       assert_equal(posn, i0.next)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
 
@@ -209,10 +206,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i1 = d1.each
     i2 = d2.each
 
-    q._select_each_raw([:all, :all]) do |da, i, posn|
-      assert(da == q.array_data)
+    q._select_each_raw([:all, :all]) do |i, posn|
       assert_equal(posn, i0.next)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
 
@@ -224,10 +220,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i1 = d1.each
     i2 = d2.each
 
-    q._select_each_raw([0, :all]) do |da, i, posn|
-      assert(da == q.array_data)
+    q._select_each_raw([0, :all]) do |i, posn|
       assert_equal(posn, i0.next)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
 
@@ -239,10 +234,9 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     i1 = d1.each
     i2 = d2.each
 
-    q._select_each_raw([:all, 0]) do |da, i, posn|
-      assert(da == q.array_data)
+    q._select_each_raw([:all, 0]) do |i, posn|
       assert_equal(posn, i0.next)
-      assert_equal(da[posn], i1.next)
+      assert_equal(q.array_data[posn], i1.next)
       assert_equal(i, i2.next)
     end
   end
@@ -327,31 +321,61 @@ class FlexArrayEachTester < MiniTest::Unit::TestCase
     end
   end
 
-  def test_collect
+  def test_flatten_collect
     d = [0,1,4,9,16,25,36,49,64]
     q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
 
-    b = q.collect {|v| v * v }
+    b = q.flatten_collect {|v| v * v }
     assert_equal(d, b)
+  end
+
+  def test_select_flatten_collect
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+
+    b = q.select_flatten_collect([:all]) {|v| v * v }
+    assert_equal(d, b)
+
+    b = q.select_flatten_collect([:all, :all]) {|v| v * v }
+    assert_equal(d, b)
+
+    d = [0,1,4]
+    b = q.select_flatten_collect([0, :all]) {|v| v * v }
+    assert_equal(d, b)
+
+    d = [0,9,36]
+    b = q.select_flatten_collect([:all, 0]) {|v| v * v }
+    assert_equal(d, b)
+  end
+
+
+
+
+
+  def test_collect
+    d = [0,1,4,9,16,25,36,49,64]
+    q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    a = q.collect {|v| v * v }
+    assert_equal(d, a.array_data)
   end
 
   def test_select_collect
     d = [0,1,4,9,16,25,36,49,64]
     q = FlexArray.new([3, 3]) {|i| i[0] * 3 + i[1]}
+    a = q.select_collect([:all]) {|v| v * v }
+    assert_equal(d, a.array_data)
 
-    b = q.select_collect([:all]) {|v| v * v }
-    assert_equal(d, b)
+    d = [0,1,16,81,256,625,1296,2401,4096]
+    b = a.select_collect([:all, :all]) {|v| v * v }
+    assert_equal(d, b.array_data)
 
-    b = q.select_collect([:all, :all]) {|v| v * v }
-    assert_equal(d, b)
+    d = [0,1,256,81,256,625,1296,2401,4096]
+    c = b.select_collect([0, :all]) {|v| v * v }
+    assert_equal(d, c.array_data)
 
-    d = [0,1,4]
-    b = q.select_collect([0, :all]) {|v| v * v }
-    assert_equal(d, b)
-
-    d = [0,9,36]
-    b = q.select_collect([:all, 0]) {|v| v * v }
-    assert_equal(d, b)
+    d = [0,1,256,6561,256,625,1679616,2401,4096]
+    e = c.select_collect([:all, 0]) {|v| v * v }
+    assert_equal(d, e.array_data)
   end
 
   def test_collect_em

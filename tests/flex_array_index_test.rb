@@ -40,13 +40,11 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, 0, -3..-1]
     assert_equal(a, q)
-    q = q1[0, 0, [0,2]]
+    q = q1[0, 0, [0,1,2]]
     assert_equal(a, q)
-    q = q1[0, 0, [0,-1]]
+    q = q1[0, 0, [0,1,-1]]
     assert_equal(a, q)
-    q = q1[0, 0, [-3,-1]]
-    assert_equal(a, q)
-    q = q1[0, 0, [-3,2]]
+    q = q1[0, 0, [-3,-2,-1]]
     assert_equal(a, q)
 
     q = q1[0, :all, 0]
@@ -56,13 +54,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, -3..-1, 0]
     assert_equal(a, q)
-    q = q1[0, [0,2], 0]
+    q = q1[0, [0,1,2], 0]
     assert_equal(a, q)
-    q = q1[0, [0,-1], 0]
+    q = q1[0, [0,1,-1], 0]
     assert_equal(a, q)
-    q = q1[0, [-3,-1], 0]
+    q = q1[0, [-3,-2,-1], 0]
     assert_equal(a, q)
-    q = q1[0, [-3,2], 0]
+    q = q1[0, [-3,1,2], 0]
     assert_equal(a, q)
 
     q = q1[:all, 0, 0]
@@ -72,13 +70,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[-3..-1, 0, 0]
     assert_equal(a, q)
-    q = q1[[0,2], 0, 0]
+    q = q1[[0,1,2], 0, 0]
     assert_equal(a, q)
-    q = q1[[0,-1], 0, 0]
+    q = q1[[0,1,-1], 0, 0]
     assert_equal(a, q)
-    q = q1[[-3,-1], 0, 0]
+    q = q1[[-3,-2,-1], 0, 0]
     assert_equal(a, q)
-    q = q1[[-3,2], 0, 0]
+    q = q1[[-3,1,2], 0, 0]
     assert_equal(a, q)
 
     q = q1[0, 1, :all]
@@ -88,13 +86,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, 1, -3..-1]
     assert_equal(a, q)
-    q = q1[0, 1, [0,2]]
+    q = q1[0, 1, [0,1,2]]
     assert_equal(a, q)
-    q = q1[0, 1, [0,-1]]
+    q = q1[0, 1, [0,1,-1]]
     assert_equal(a, q)
-    q = q1[0, 1, [-3,-1]]
+    q = q1[0, 1, [-3,-2,-1]]
     assert_equal(a, q)
-    q = q1[0, 1, [-3,2]]
+    q = q1[0, 1, [-3,1,2]]
     assert_equal(a, q)
 
     q = q1[0, :all, 1]
@@ -104,13 +102,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, -3..-1, 1]
     assert_equal(a, q)
-    q = q1[0, [0,2], 1]
+    q = q1[0, [0,1,2], 1]
     assert_equal(a, q)
-    q = q1[0, [0,-1], 1]
+    q = q1[0, [0,1,-1], 1]
     assert_equal(a, q)
-    q = q1[0, [-3,-1], 1]
+    q = q1[0, [-3,-2,-1], 1]
     assert_equal(a, q)
-    q = q1[0, [-3,2], 1]
+    q = q1[0, [-3,1,2], 1]
     assert_equal(a, q)
 
     q = q1[:all, 1, 0]
@@ -120,13 +118,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[-3..-1, 1, 0]
     assert_equal(a, q)
-    q = q1[[0,2], 1, 0]
+    q = q1[[0,1,2], 1, 0]
     assert_equal(a, q)
-    q = q1[[0,-1], 1, 0]
+    q = q1[[0,1,-1], 1, 0]
     assert_equal(a, q)
-    q = q1[[-3,-1], 1, 0]
+    q = q1[[-3,-2,-1], 1, 0]
     assert_equal(a, q)
-    q = q1[[-3,2], 1, 0]
+    q = q1[[-3,1,2], 1, 0]
     assert_equal(a, q)
 
     q = q1[0, 2, :all]
@@ -136,13 +134,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, 2, -3..-1]
     assert_equal(a, q)
-    q = q1[0, 2, [0,2]]
+    q = q1[0, 2, [0,1,2]]
     assert_equal(a, q)
-    q = q1[0, 2, [0,-1]]
+    q = q1[0, 2, [0,1,-1]]
     assert_equal(a, q)
-    q = q1[0, 2, [-3,-1]]
+    q = q1[0, 2, [-3,-2,-1]]
     assert_equal(a, q)
-    q = q1[0, 2, [-3,2]]
+    q = q1[0, 2, [-3,1,2]]
     assert_equal(a, q)
 
     q = q1[0, :all, 2]
@@ -152,13 +150,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[0, -3..-1, 2]
     assert_equal(a, q)
-    q = q1[0, [0,2], 2]
+    q = q1[0, [0,1,2], 2]
     assert_equal(a, q)
-    q = q1[0, [0,-1], 2]
+    q = q1[0, [0,1,-1], 2]
     assert_equal(a, q)
-    q = q1[0, [-3,-1], 2]
+    q = q1[0, [-3,-2,-1], 2]
     assert_equal(a, q)
-    q = q1[0, [-3,2], 2]
+    q = q1[0, [-3,1,2], 2]
     assert_equal(a, q)
 
     q = q1[:all, 2, 0]
@@ -168,13 +166,13 @@ class FlexArrayIndexTester < MiniTest::Unit::TestCase
     assert_equal(a, q)
     q = q1[-3..-1, 2, 0]
     assert_equal(a, q)
-    q = q1[[0,2], 2, 0]
+    q = q1[[0,1,2], 2, 0]
     assert_equal(a, q)
-    q = q1[[0,-1], 2, 0]
+    q = q1[[0,1,-1], 2, 0]
     assert_equal(a, q)
-    q = q1[[-3,-1], 2, 0]
+    q = q1[[-3,-2,-1], 2, 0]
     assert_equal(a, q)
-    q = q1[[-3,2], 2, 0]
+    q = q1[[-3,1,2], 2, 0]
     assert_equal(a, q)
 
     q = q1[0, :all, :all]

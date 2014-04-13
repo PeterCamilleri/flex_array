@@ -44,20 +44,23 @@ class FlexArray
   #* posn - The position of the element being accessed in the data array.
   #<br>Note
   #This is a recursive function. The recursion runs for index in 0..#dimensions
+  #<br>Endemic Code Smells
+  # :reek:LongParameterList
   def process_indexes_worker(depth, posn, indexes, current, &block)
     if depth == dimensions                 #Is there more work to do?
       block.call(current, posn)            #Index ready, call the block.
     else
-      spec   = @array_specs[depth]         #Get the current specification.
-      range  = indexes[depth]              #Get it's range.
-      posn  += spec.index_step(range.min)  #Compute the initial position.
-      stride = spec.stride                 #Cache the step stride.
+      spec = @array_specs[depth]           #Get the current specification.
+      min, stride = spec.min, spec.stride  #Extract the relevant info.
 
-      range.each do |index|                #Iterate over the range.
+      indexes[depth].each do |index|       #Iterate over the range.
         current[depth] = index             #Update the current index.
         #Process the next component in the array index.
-        process_indexes_worker(depth+1, posn, indexes, current, &block)
-        posn += stride                     #Step to the next position.
+        process_indexes_worker(depth+1,
+                               posn + (index-min) * stride,
+                               indexes,
+                               current,
+                               &block)
       end
     end
   end
@@ -91,8 +94,8 @@ class FlexArray
     if depth == dimensions                 #Is there more work to do?
       block.call(current, posn)            #Index ready, call the block.
     else
-      spec   = @array_specs[depth]         #Get the current specification.
-      stride = spec.stride                 #Cache the step stride.
+      spec = @array_specs[depth]           #Get the current specification.
+      stride = spec.stride
 
       spec.each do |index|                 #Iterate over the range.
         current[depth] = index             #Update the current index.

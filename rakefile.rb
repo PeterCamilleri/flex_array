@@ -43,7 +43,7 @@ Rake::TestTask.new do |t|
 end
 
 task :reek do |t|
-  `reek lib > reek.txt`
+  `reek --no-color lib > reek.txt`
 end
 
 def eval_puts(str)

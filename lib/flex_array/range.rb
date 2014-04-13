@@ -25,16 +25,14 @@ class Range
   #<br>Exceptions
   #* IndexError if the range is not valid.
   def to_index_range(spec)
-    self_min, self_max, spec_max = self.min, self.max, spec.max
+    self_min, self_max, spec_max = self.begin, self.end, spec.max
+    self_max -= 1 if self_max > 0 && self.exclude_end?
 
-    if self_min < 0 && self_max < 0
-      alter_ego = (spec_max + self_min + 1)..(spec_max + self_max + 1)
-    else
-      alter_ego = self
-    end
+    self_min = spec_max + self_min + 1 if self_min < 0
+    self_max = spec_max + self_max + 1 if self_max < 0
 
-    if spec === alter_ego.min && spec === alter_ego.max
-      alter_ego
+    if spec === self_min && spec === self_max && self_min < self_max
+      self_min..self_max
     else
       fail IndexError, "Subscript out of range: #{self.inspect}"
     end

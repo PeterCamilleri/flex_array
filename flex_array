@@ -98,12 +98,12 @@
             <File name="tests\spec_component_test.rb" />
         </Folder>
         <File name=".gitignore" />
-        <File name="flex_array-0.2.0.gem" />
         <File name="flex_array.gemspec" />
         <File name="license.txt" />
         <File name="rakefile.rb" />
         <File name="readme.txt" />
         <File name="reek.txt" />
         <File name="sire.rb" />
+        <File name="flex_array.reek" />
     </Project>
 </NotepadPlus>

@@ -42,21 +42,16 @@ class ArrayTester < MiniTest::Unit::TestCase
   def test_the_to_index_range_method
     spec = SpecComponent.new(0...10, 1)
 
-    assert_equal(0..0, [0,0].to_index_range(spec))
-    assert_equal(9..9, [9,9].to_index_range(spec))
-    assert_equal(0..9, [0,9].to_index_range(spec))
+    assert_equal([0], [0].to_index_range(spec))
+    assert_equal([9,9], [9,9].to_index_range(spec))
+    assert_equal([0,9], [0,9].to_index_range(spec))
 
-    assert_equal(0..9, [0,-1].to_index_range(spec))
-    assert_equal(1..8, [1,-2].to_index_range(spec))
-    assert_equal(8..9, [-2,-1].to_index_range(spec))
+    assert_equal([0, 9], [0,-1].to_index_range(spec))
+    assert_equal([1, 8], [1,-2].to_index_range(spec))
+    assert_equal([8, 9], [-2,-1].to_index_range(spec))
 
-    assert_raises(IndexError) { [0,9,0].to_index_range(spec) }
-    assert_raises(IndexError) { [9,0].to_index_range(spec) }
-    assert_raises(IndexError) { [-1,-2].to_index_range(spec) }
     assert_raises(IndexError) { [0,10].to_index_range(spec) }
 
-    assert_raises(TypeError) { [].to_index_range(spec) }
-    assert_raises(TypeError) { [0].to_index_range(spec) }
     assert_raises(TypeError) { [:one, :two].to_index_range(spec) }
   end
 end

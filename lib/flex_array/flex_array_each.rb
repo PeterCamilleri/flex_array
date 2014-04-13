@@ -1,6 +1,8 @@
 #* flex_array_each.rb - The flexible array class each and related methods.
 # :reek:RepeatedConditional - @transposed determines if short cuts are allowed.
 class FlexArray
+  include Enumerable
+
   #Retrieve data from the array endlessly repeating as needed.
   #<br>Parameters
   #* count - The number of times to cycle through the flex array. Defaults to
@@ -161,12 +163,11 @@ class FlexArray
   #* If the block is not present, then an enumerator object is returned.
   #  Otherwise the flex array is returned.
   #<br>Block Arguments
-  #* data - A reference to the low level data store.
   #* index - An array with the full index of the selected value.
   #* posn - The position of the data in the low level data store.
   def _each_raw(&block)
     if block_given?
-      process_all {|index, posn| block.call(@array_data, index, posn)}
+      process_all {|index, posn| block.call(index, posn)}
       self
     else
       self.to_enum(:_each_raw)
@@ -186,44 +187,35 @@ class FlexArray
   #* If the block is not present, then an enumerator object is returned.
   #  Otherwise the flex array is returned.
   #<br>Block Arguments
-  #* data - A reference to the low level data store.
   #* index - An array with the full index of the selected value.
   #* posn - The position of the data in the low level data store.
   def _select_each_raw(indexes, &block)
     validate_index_count(indexes)
 
     if block_given?
-      process_indexes(indexes) {|index, posn| block.call(@array_data, index, posn)}
+      process_indexes(indexes) {|index, posn| block.call(index, posn)}
       self
     else
       self.to_enum(:_select_each_raw, indexes)
     end
   end
 
-  #The flex array version of collect.
+  alias_method :flatten_collect, :collect
+
+  #The flex array version of collect that returns a flex array.
   #<br>Parameters
   #* block - The optional block to be executed for each selected array element.
   #<br>Returns
   #* An array of the computed objects retuned by the block.
-  #  If the block is not present, an enumerator object is returned.
   #<br>Block Arguments
   #* value - Each value selected by the iteration.
   def collect(&block)
-    if block_given?
-      if @transposed
-        result = []
-        process_all {|_index, posn| result << block.call(@array_data[posn])}
-        result
-      else
-        @array_data.collect(&block)
-      end
-    else
-      self.to_enum(:collect)
-    end
+    result = self.dup
+    result.collect!(&block)
   end
 
   #The flex array version of collect that accepts an optional set of indexes
-  #to select the data being collected.
+  #to select the data being collected into a flex array.
   #<br>Parameters
   #* indexes - An array with as many entries as the flexible array has
   #  dimensions. See [] for more details. Note that since indexes is NOT
@@ -235,6 +227,23 @@ class FlexArray
   #<br>Block Arguments
   #* value - Each value selected by the iteration.
   def select_collect(indexes, &block)
+    result = self.dup
+    result.select_collect!(indexes, &block)
+  end
+
+  #The flex array version of collect that accepts an optional set of indexes
+  #to select the data being collected into a standard array.
+  #<br>Parameters
+  #* indexes - An array with as many entries as the flexible array has
+  #  dimensions. See [] for more details. Note that since indexes is NOT
+  #  a splat parameter, it must be passed as an array explicitly.
+  #* block - The optional block to be executed for each selected array element.
+  #<br>Returns
+  #* An array of the computed objects retuned by the block.
+  #  If the block is not present, an enumerator object is returned.
+  #<br>Block Arguments
+  #* value - Each value selected by the iteration.
+  def select_flatten_collect(indexes, &block)
     validate_index_count(indexes)
 
     if block_given?

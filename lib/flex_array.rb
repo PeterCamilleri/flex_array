@@ -19,9 +19,7 @@ require_relative 'flex_array/flex_array_process'
 #\FlexArray - A flexible array class.
 #* flex_array.rb - The root file that gathers up all the flex array parts.
 class FlexArray
-  include Enumerable
   include InArrayAlready
-
 
   #The version of this class.
   #<br>Returns

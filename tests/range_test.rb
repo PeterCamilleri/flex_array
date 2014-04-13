@@ -31,8 +31,9 @@ class RangeTester < MiniTest::Unit::TestCase
 
   def test_the_to_index_range_method
     lc = SpecComponent.new(0...10, 1)
-    assert_equal(1...3, (1...3).to_index_range(lc))
+    assert_equal(1..2, (1...3).to_index_range(lc))
     assert_equal(8..9, (-2..-1).to_index_range(lc))
+    assert_equal(2..8, (2..-2).to_index_range(lc))
 
     assert_raises(IndexError) { (1...11).to_index_range(lc) }
     assert_raises(IndexError) { (1..10).to_index_range(lc) }

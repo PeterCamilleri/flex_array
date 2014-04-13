@@ -29,14 +29,17 @@ class Array
   #<br>Exceptions
   #* IndexError if the range is not valid.
   def to_index_range(spec)
-    self_min, self_max, spec_max = Integer(self[0]), Integer(self[1]), spec.max
-    self_min = spec_max + self_min + 1 if self_min < 0
-    self_max = spec_max + self_max + 1 if self_max < 0
+    spec_max = spec.max
 
-    if self.length == 2 && self_min <= self_max && spec === self_min && spec === self_max
-      self_min..self_max
-    else
-      fail IndexError, "Subscript invalid or out of range: #{self.inspect}"
+    self.collect do |value|
+      value = Integer(value)
+      value = spec_max + value + 1 if value < 0
+
+      unless spec === value
+        fail IndexError, "Subscript invalid or out of range: #{self.inspect}"
+      end
+
+      value
     end
   end
 
@@ -44,7 +47,8 @@ class Array
   #<br>Returns
   #* A flex array that references this array.
   #<br>Note
-  #* To avoid a shared reference, use my_array.dup.to_flex_array instead.
+  #* To avoid a shared reference, use my_array.dup.to_flex_array or
+  #  FlexArray.new_from_array(my_array.dup)  instead.
   def to_flex_array
     FlexArray.new_from_array(self)
   end
