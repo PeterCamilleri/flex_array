@@ -1,47 +1,26 @@
 #!/usr/bin/env rake
+# coding: utf-8
+
 require 'rake/testtask'
 require 'rdoc/task'
+require "bundler/gem_tasks"
 
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = "rdoc"
-  rdoc.rdoc_files = ["lib/flex_array.rb",
-                     "lib/flex_array/flex_array_new.rb",
-                     "lib/flex_array/flex_array_index.rb",
-                     "lib/flex_array/flex_array_each.rb",
-                     "lib/flex_array/flex_array_reshape.rb",
-                     "lib/flex_array/flex_array_append.rb",
-                     "lib/flex_array/flex_array_transpose.rb",
-                     "lib/flex_array/flex_array_process.rb",
-                     "lib/flex_array/flex_array_validate.rb",
-                     "lib/flex_array/flex_array_forever.rb",
-                     "lib/flex_array/object.rb",
-                     "lib/flex_array/integer.rb",
-                     "lib/flex_array/range.rb",
-                     "lib/flex_array/array.rb",
-                     "lib/flex_array/spec_array.rb",
-                     "lib/flex_array/spec_component.rb",
-                     "license.txt", "README.txt"]
+
+  #List out all the files to be documented.
+  rdoc.rdoc_files.include("lib/**/*.rb", "license.txt", "readme.txt")
+
   rdoc.options << '--visibility' << 'private'
 end
 
 Rake::TestTask.new do |t|
-  t.test_files = ["tests/spec_component_test.rb",
-                  "tests/spec_array_test.rb",
-                  "tests/object_test.rb",
-                  "tests/integer_test.rb",
-                  "tests/range_test.rb",
-                  "tests/array_test.rb",
-                  "tests/flex_array_new_test.rb",
-                  "tests/flex_array_index_test.rb",
-                  "tests/flex_array_each_test.rb",
-                  "tests/flex_array_reshape_test.rb",
-                  "tests/flex_array_append_test.rb",
-                  "tests/flex_array_transpose_test.rb",
-                  "tests/flex_array_validate_test.rb",
-                  "tests/flex_array_test.rb"]
+  #List out all the test files.
+  t.test_files = FileList['tests/**/*.rb']
   t.verbose = false
 end
 
+desc "Run a scan for smelly code!"
 task :reek do |t|
   `reek --no-color lib > reek.txt`
 end
@@ -51,6 +30,7 @@ def eval_puts(str)
   eval str
 end
 
+desc "Run an interactive flex array session."
 task :console do
   require 'irb'
   require 'irb/completion'
@@ -61,4 +41,10 @@ task :console do
   eval_puts "@d = FlexArray.new([3,3]) {|i| i[0]*3 + i[1]}"
   ARGV.clear
   IRB.start
+end
+
+desc "What version of flex_array is this?"
+task :vers do |t|
+  puts
+  puts "flex_array version = #{FlexArray::VERSION}"
 end

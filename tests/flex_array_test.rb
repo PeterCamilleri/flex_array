@@ -15,11 +15,10 @@ class FlexArrayTester < MiniTest::Unit::TestCase
   end
 
   def test_version_reporting
-    version = '0.3.0'
     f = FlexArray.new([3,3], 'test')
 
-    assert_equal(version, FlexArray.version)
-    assert_equal(version, f.version)
+    assert_equal(FlexArray::VERSION, FlexArray.version)
+    assert_equal(FlexArray::VERSION, f.version)
   end
 
   def test_the_limits_method

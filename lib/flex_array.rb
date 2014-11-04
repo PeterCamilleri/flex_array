@@ -1,4 +1,7 @@
 require 'in_array'
+
+require_relative 'flex_array/version'
+
 require_relative 'flex_array/flex_array_forever'
 require_relative 'flex_array/spec_component'
 require_relative 'flex_array/spec_array'
@@ -25,14 +28,14 @@ class FlexArray
   #<br>Returns
   #* A version string; <major>.<minor>.<step>
   def self.version
-    '0.3.0'
+    FlexArray::VERSION
   end
 
   #The version of the class of this instance.
   #<br>Returns
   #* A version string; <major>.<minor>.<step>
   def version
-    self.class.version
+    FlexArray::VERSION
   end
 
   #The array specifications. An array of spec components.
