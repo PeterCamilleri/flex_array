@@ -1,3 +1,4 @@
+# coding: utf-8
 # Really simple program # 3
 # A Simple Interactive Ruby Environment
 # SIRE Version 0.2.6
