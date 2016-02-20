@@ -1,18 +1,12 @@
 require_relative '../lib/flex_array'
+gem              'minitest'
 require          'minitest/autorun'
+require          'minitest_visible'
 
-class ArrayTester < MiniTest::Unit::TestCase
-  $do_this_only_one_time = "" unless defined? $do_this_only_one_time
+class ArrayTester < Minitest::Test
 
-  def initialize(*all)
-    if $do_this_only_one_time != __FILE__
-      puts
-      puts "Running test file: #{File.split(__FILE__)[1]}"
-      $do_this_only_one_time = __FILE__
-    end
-
-    super(*all)
-  end
+  #Track mini-test progress.
+  include MinitestVisible
 
   def test_the_limits_method
     test = [1,2,3,4,5,6]

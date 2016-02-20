@@ -1,18 +1,12 @@
 require_relative '../lib/flex_array'
+gem              'minitest'
 require          'minitest/autorun'
+require          'minitest_visible'
 
-class FlexArrayReshapeTester < MiniTest::Unit::TestCase
-  $do_this_only_one_time = "" unless defined? $do_this_only_one_time
+class FlexArrayReshapeTester < Minitest::Test
 
-  def initialize(*all)
-    if $do_this_only_one_time != __FILE__
-      puts
-      puts "Running test file: #{File.split(__FILE__)[1]}"
-      $do_this_only_one_time = __FILE__
-    end
-
-    super(*all)
-  end
+  #Track mini-test progress.
+  include MinitestVisible
 
   def test_the_reshape_method
     ba1 = [[0,0], [0,1], [0,2], [0,3],

@@ -1,18 +1,12 @@
 require_relative '../lib/flex_array'
+gem              'minitest'
 require          'minitest/autorun'
+require          'minitest_visible'
 
-class FlexArrayValidateTester < MiniTest::Unit::TestCase
-  $do_this_only_one_time = "" unless defined? $do_this_only_one_time
-  
-  def initialize(*all)
-    if $do_this_only_one_time != __FILE__
-      puts
-      puts "Running test file: #{File.split(__FILE__)[1]}" 
-      $do_this_only_one_time = __FILE__
-    end
-    
-    super(*all)
-  end
+class FlexArrayValidateTester < Minitest::Test
+
+  #Track mini-test progress.
+  include MinitestVisible
 
   def test_the_compatible_method
     f = FlexArray.new([3,3], 'f')
@@ -20,7 +14,7 @@ class FlexArrayValidateTester < MiniTest::Unit::TestCase
     h = FlexArray.new([1..3,1..3], 'h')
     i = FlexArray.new([3,3,3], 'i')
     j = FlexArray.new([3], 'j')
-    
+
     assert(f.compatible?(g))
     refute(f.compatible?(h))
     refute(f.compatible?(i))

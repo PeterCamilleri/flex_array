@@ -1,18 +1,12 @@
 require_relative '../lib/flex_array'
+gem              'minitest'
 require          'minitest/autorun'
+require          'minitest_visible'
 
-class SpecArrayTester < MiniTest::Unit::TestCase
-  $do_this_only_one_time = "" unless defined? $do_this_only_one_time
+class SpecArrayTester < Minitest::Test
 
-  def initialize(*all)
-    if $do_this_only_one_time != __FILE__
-      puts
-      puts "Running test file: #{File.split(__FILE__)[1]}"
-      $do_this_only_one_time = __FILE__
-    end
-
-    super(*all)
-  end
+  #Track mini-test progress.
+  include MinitestVisible
 
   def test_that_it_builds_specs
     spec = SpecArray.new([0...10, 0...8])

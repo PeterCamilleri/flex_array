@@ -1,18 +1,12 @@
 require_relative '../lib/flex_array'
+gem              'minitest'
 require          'minitest/autorun'
+require          'minitest_visible'
 
-class FlexArrayTransposeTester < MiniTest::Unit::TestCase
-  $do_this_only_one_time = "" unless defined? $do_this_only_one_time
+class FlexArrayTransposeTester < Minitest::Test
 
-  def initialize(*all)
-    if $do_this_only_one_time != __FILE__
-      puts
-      puts "Running test file: #{File.split(__FILE__)[1]}"
-      $do_this_only_one_time = __FILE__
-    end
-
-    super(*all)
-  end
+  #Track mini-test progress.
+  include MinitestVisible
 
   def test_the_transpose_em_method
     f = FlexArray.new([3,3]) { |i| i[0]*3 + i[1] }
