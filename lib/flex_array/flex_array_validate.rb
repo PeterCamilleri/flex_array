@@ -7,7 +7,7 @@ class FlexArray
   #* true if the arrays are compatible.
   def compatible?(other)
     @array_specs == other.array_specs
-  rescue Exception
+  rescue
     false
   end
 

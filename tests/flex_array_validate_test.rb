@@ -19,5 +19,10 @@ class FlexArrayValidateTester < Minitest::Test
     refute(f.compatible?(h))
     refute(f.compatible?(i))
     refute(f.compatible?(j))
+
+    assert(j.compatible?([1,2,3]))
+    refute(j.compatible?([1,2,3,4]))
+
+    refute(f.compatible?(42))
   end
 end
