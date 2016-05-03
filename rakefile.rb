@@ -25,22 +25,9 @@ task :reek do |t|
   `reek --no-color lib > reek.txt`
 end
 
-def eval_puts(str)
-  puts str
-  eval str
-end
-
 desc "Run an interactive flex array session."
 task :console do
-  require 'irb'
-  require 'irb/completion'
-  require_relative 'lib/flex_array'
-  eval_puts "@a = FlexArray.new([2,3,4]) {|i| i.clone}"
-  eval_puts "@b = FlexArray.new([2,3,4]) {|i| (i[0]+i[2])*(i[1] + i[2])}"
-  eval_puts "@c = FlexArray.new([0,3])"
-  eval_puts "@d = FlexArray.new([3,3]) {|i| i[0]*3 + i[1]}"
-  ARGV.clear
-  IRB.start
+  system "ruby irbt.rb local"
 end
 
 desc "What version of flex_array is this?"
