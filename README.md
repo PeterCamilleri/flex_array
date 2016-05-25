@@ -23,6 +23,18 @@ The flex_array gem itself is found at: ( https://rubygems.org/gems/flex_array )
 
 ## Usage
 
+Using flex_array in an application can be as simple as:
+```ruby
+require 'flex_array'
+
+arr1 = FlexArray.new([10,10])                       # 10 by 10 of nil
+arr2 = FlexArray.new([10,10], 0)                    # 10 by 10 of zero
+arr2 = FlexArray.new([1..12,1..12]) {|i| i[0]*i[1]} # Times table.
+
+arr2[4..5,4..5] = 42 #Set the middle of the array.
+
+```
+
 A lot more information on the operation of this gem may be found in the docs
 folder in the Flex_Array_UG, available in both open office (.odt) and portable
 document (.pdf) formats.
