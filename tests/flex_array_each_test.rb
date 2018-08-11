@@ -407,10 +407,10 @@ class FlexArrayEachTester < Minitest::Test
     assert_equal([2, 1], i)
 
     i = q.find_index(300)
-    assert_equal(nil, i)
+    assert_nil(i)
 
     i = q.find_index { |v| v > 206 }
-    assert_equal(nil, i)
+    assert_nil(i)
   end
 
   def test_select_find_index
@@ -422,22 +422,22 @@ class FlexArrayEachTester < Minitest::Test
     assert_equal([2, 1], i)
 
     i = q.select_find_index([0, :all], 107)
-    assert_equal(nil, i)
+    assert_nil(i)
 
     i = q.select_find_index([1, :all], 107)
-    assert_equal(nil, i)
+    assert_nil(i)
 
     i = q.select_find_index([2, :all], 107)
     assert_equal([2, 1], i)
 
     i = q.select_find_index([:all, 0], 107)
-    assert_equal(nil, i)
+    assert_nil(i)
 
     i = q.select_find_index([:all, 1], 107)
     assert_equal([2, 1], i)
 
     i = q.select_find_index([:all, 2], 107)
-    assert_equal(nil, i)
+    assert_nil(i)
   end
 
   def test_find_indexes
