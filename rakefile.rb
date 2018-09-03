@@ -2,17 +2,7 @@
 # coding: utf-8
 
 require 'rake/testtask'
-require 'rdoc/task'
 require "bundler/gem_tasks"
-
-RDoc::Task.new do |rdoc|
-  rdoc.rdoc_dir = "rdoc"
-
-  #List out all the files to be documented.
-  rdoc.rdoc_files.include("lib/**/*.rb", "license.txt", "readme.txt")
-
-  rdoc.options << '--visibility' << 'private'
-end
 
 Rake::TestTask.new do |t|
   #List out all the test files.
