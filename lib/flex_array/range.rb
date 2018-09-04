@@ -1,10 +1,7 @@
-#Extensions to Range needed to support flex array.
+# Extensions to Range needed to support flex array.
+
 class Range
-  #Convert this integer to a limits component.
-  #<br>Parameters
-  #* stride - the number of cells separating data with adjacent indexes.
-  #<br>Returns
-  #* A SpecComponent object with the same range as self.
+  # Convert this integer to a limits component.
   def to_spec_component(stride)
     min = self.min
 
@@ -17,13 +14,7 @@ class Range
     end
   end
 
-  #Convert this range to an range index against the spec.
-  #<br>Parameters
-  #* spec - The spec component used to validate this index.
-  #<br>Returns
-  #* A range.
-  #<br>Exceptions
-  #* IndexError if the range is not valid.
+  # Convert this range to an range index against the spec.
   def to_index_range(spec)
     self_min, self_max, spec_max = self.begin, self.end, spec.max
     self_max -= 1 if self_max > 0 && self.exclude_end?
