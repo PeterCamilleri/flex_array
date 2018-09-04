@@ -1,12 +1,7 @@
-#* flex_array_append.rb - The flexible array class << and related methods.
+# Append method support for the flex array.
+
 class FlexArray
-  #Append to the flex array.
-  #<br>Parameters
-  #* data - the data being appended to this array.
-  #<br>Returns
-  #* The array spec of the array being appended.
-  #<br>Exceptions
-  #* ArgumentError if the data may not be appended.
+  # Append to the flex array.
   def << (data)
     fail "Cannot append to a transposed array." if @transposed
     specs = get_append_specs(data = data.in_array)
@@ -15,22 +10,8 @@ class FlexArray
     self
   end
 
-  #Make a copy of the other's data.
-  #<br>Parameters
-  #* other - The flex array whose data is to be copied.
-  def copy_data(other)
-    fail ArgumentError, "Incompatible data copy." unless compatible?(other)
-    @array_data = other.array_data.dup
-  end
-
   private
-  #Extract and validate the append array_spec
-  #<br>Parameters
-  #* data - the data being appended to this array.
-  #<br>Returns
-  #* The array spec of the array being appended.
-  #<br>Exceptions
-  #* ArgumentError if the data may not be appended.
+  # Extract and validate the append array_spec
   def get_append_specs(data)
     spec_len = (specs = data.array_specs).length
 

@@ -54,23 +54,4 @@ class FlexArrayAppendTester < Minitest::Test
     assert_raises(ArgumentError) { f << g }
   end
 
-  def test_the_copy_data_method
-    f = FlexArray.new([2,3], "Title")
-    g = FlexArray.new([2,3], "Fight")
-    f.copy_data(g)
-    assert_equal(f.array_data, g.array_data)
-    assert(f.array_data.object_id != g.array_data.object_id)
-  end
-
-  def test_copy_data_method_failures
-    f = FlexArray.new([2,3], "Title")
-    g = FlexArray.new([2,4], "Fight")
-    assert_raises(ArgumentError) { f.copy_data(g) }
-
-    g = FlexArray.new([1,3], "Fight")
-    assert_raises(ArgumentError) { f.copy_data(g) }
-
-    g = FlexArray.new([2,2], "Fight")
-    assert_raises(ArgumentError) { f.copy_data(g) }
-  end
 end
