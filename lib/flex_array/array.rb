@@ -1,33 +1,22 @@
-#Extensions to Array needed to support flex array.
+# Extensions to Array needed to support flex array.
+
 class Array
-  #Get the specifications of the array index values.
-  #<br>Returns
-  #* An array with one range in it.
+  # Get the specifications of the array index values.
   def limits
     [0...self.length]
   end
 
-  #Quick access to the limits for internal use.
-  #<br>Returns
-  #* An array with one spec component in it.
+  # Quick access to the limits for internal use.
   def array_specs
     SpecArray.new([0...self.length])
   end
 
-  #Quick access to the array data for internal use.
-  #<br>Returns
-  #* An array -- self
+  # Quick access to the array data for internal use.
   def array_data
     self
   end
 
-  #Convert this array to an range index against the spec.
-  #<br>Parameters
-  #* spec - The spec component used to validate this index.
-  #<br>Returns
-  #* A range.
-  #<br>Exceptions
-  #* IndexError if the range is not valid.
+  # Convert this array to an range index against the spec.
   def to_index_range(spec)
     spec_max = spec.max
 
@@ -43,13 +32,9 @@ class Array
     end
   end
 
-  #Return this flex array as a flex array!
-  #<br>Returns
-  #* A flex array that references this array.
-  #<br>Note
-  #* To avoid a shared reference, use my_array.dup.to_flex_array or
-  #  FlexArray.new_from_array(my_array.dup)  instead.
+  # Return this flex array as a flex array!
   def to_flex_array
     FlexArray.new_from_array(self)
   end
+
 end
