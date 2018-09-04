@@ -10,7 +10,7 @@ class Integer
     end
   end
 
-  # Convert this integer to an range index against the spec.
+  # Convert this integer to a range index against the spec.
   def to_index_range(spec)
     alter_ego = (self >= 0) ? self : (spec.max + self + 1)
 
