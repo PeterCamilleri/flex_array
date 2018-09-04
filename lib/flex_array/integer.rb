@@ -1,10 +1,7 @@
-#Extensions to Integer needed to support flex array.
+# Extensions to Integer needed to support flex array.
+
 class Integer
-  #Convert this integer to a limits component.
-  #<br>Parameters
-  #* stride - the number of cells separating data with adjacent indexes.
-  #<br>Returns
-  #* A SpecComponent object of 0...self
+  # Convert this integer to a limits component.
   def to_spec_component(stride)
     if self >= 0
       SpecComponent.new(0...self, stride)
@@ -13,13 +10,7 @@ class Integer
     end
   end
 
-  #Convert this integer to an range index against the spec.
-  #<br>Parameters
-  #* spec - The spec component used to validate this index.
-  #<br>Returns
-  #* A range.
-  #<br>Exceptions
-  #* IndexError if the range is not valid.
+  # Convert this integer to an range index against the spec.
   def to_index_range(spec)
     alter_ego = (self >= 0) ? self : (spec.max + self + 1)
 
