@@ -19,79 +19,62 @@ require_relative 'flex_array/flex_array_each'
 require_relative 'flex_array/flex_array_validate'
 require_relative 'flex_array/flex_array_process'
 
-#\FlexArray - A flexible array class.
-#* flex_array.rb - The root file that gathers up all the flex array parts.
+# A flexible array class.
 class FlexArray
   include InArrayAlready
 
-  #The version of this class.
-  #<br>Returns
-  #* A version string; <major>.<minor>.<step>
+  # The version of this class. "<major>.<minor>.<step>"
   def self.version
     FlexArray::VERSION
   end
 
-  #The version of the class of this instance.
-  #<br>Returns
-  #* A version string; <major>.<minor>.<step>
+  # The version of the class of this instance.
   def version
     FlexArray::VERSION
   end
 
-  #The array specifications. An array of spec components.
+  # The array specifications. An array of spec components.
   attr_accessor :array_specs
 
-  #The underlying array data used by the flex array.
+  # The underlying array data used by the flex array.
   attr_accessor :array_data
 
-  #The total number of elements in this array.
+  # The total number of elements in this array.
   def length
     @array_specs.spec_count
   end
 
   alias size length
 
-  #The number of dimensions in this array.
+  # The number of dimensions in this array.
   def dimensions
     @array_specs.spec_dimensions
   end
 
-  #Is this flex array transposed?
+  # Is this flex array transposed?
   attr_reader :transposed
 
-  #Get the limits of the subscripts of the flex array.
+  # Get the limits of the subscripts of the flex array.
   def limits
     @array_specs.collect {|spec| spec.range }
   end
 
-  #Return this flex array as a flex array!
-  #<br>Returns
-  #* A flex array -- self
+  # Return this flex array as a flex array!
   def to_flex_array
     self
   end
 
-  #Are these FlexArrays equal?
-  #<br>Parameters
-  #* other - The object being tested for equality.
-  #<br>Returns
-  #* true if the flex arrays are equal shape and data.
+  # Are these FlexArrays equal?
   def ==(other)
     self.compatible?(other) && @array_data == other.array_data
   end
 
-  #Make FlexArrays comparable.
-  #<br>Parameters
-  #* other - The object being tested for compariositality.
-  #<br>Returns
-  #* 1 if self > other
-  #* 0 if self = other
-  #* -1 if self < other
+  # Make FlexArrays comparable with the compariositality method.
   def <=>(other)
     @array_data <=> other.array_data
   end
 
-  #Is this flex array empty?
+  # Is this flex array empty?
   def empty?
     length == 0
   end
