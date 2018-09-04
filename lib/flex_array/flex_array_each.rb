@@ -1,21 +1,9 @@
-#* flex_array_each.rb - The flexible array class each and related methods.
-# :reek:RepeatedConditional - @transposed determines if short cuts are allowed.
+# Support for each and related methods for the flex array.
+
 class FlexArray
   include Enumerable
 
-  #Retrieve data from the array endlessly repeating as needed.
-  #<br>Parameters
-  #* count - The number of times to cycle through the flex array. Defaults to
-  #  cycling forever.
-  #* block - The optional block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, then an enumerator object is returned.
-  #<br>Returns
-  #* nil or an enumerator if no block is provided.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
-  #<br>Endemic Code Smells
-  #* :reek:NestedIterators
+  # Retrieve data from the array endlessly repeating as needed.
   def cycle(count = FOREVER, &block)
     if block_given?
       if @transposed && length > 0
@@ -34,22 +22,7 @@ class FlexArray
     end
   end
 
-  #Retrieve data from a subset of the flex array endlessly repeating as needed.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* count - The number of times to cycle through the flex array. Defaults to
-  #  cycling forever.
-  #* block - The optional block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, then an enumerator object is returned.
-  #<br>Returns
-  #* nil or an enumerator if no block is provided.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
-  #<br>Endemic Code Smells
-  #* :reek:NestedIterators
+  # Retrieve data from a subset of the flex array endlessly repeating as needed.
   def select_cycle(indexes, count = FOREVER, &block)
     validate_index_count(indexes)
 
@@ -68,14 +41,7 @@ class FlexArray
     end
   end
 
-  #Process the standard each operator.
-  #<br>Parameters
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # Process the standard each operator.
   def each(&block)
     if block_given?
       if @transposed
@@ -90,17 +56,7 @@ class FlexArray
     end
   end
 
-  #Process the enhanced select_each operator.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # Process the enhanced select_each operator.
   def select_each(indexes, &block)
     validate_index_count(indexes)
 
@@ -112,15 +68,7 @@ class FlexArray
     end
   end
 
-  #Process the standard each_with_index operator.
-  #<br>Parameters
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
-  #* index - An array with the full index of the selected value.
+  # Process the standard each_with_index operator.
   def each_with_index(&block)
     if block_given?
       process_all {|index, posn| block.call(@array_data[posn], index)}
@@ -130,18 +78,7 @@ class FlexArray
     end
   end
 
-  #Process the enhanced select_each_with_index operator.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
-  #* index - An array with the full index of the selected value.
+  # Process the enhanced select_each_with_index operator.
   def select_each_with_index(indexes, &block)
     validate_index_count(indexes)
 
@@ -153,18 +90,8 @@ class FlexArray
     end
   end
 
-  #A specialized each variant that passes the low level data, the index
-  #and the position to the block.
-  #<br>Parameters
-  #* block - The optional block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, then an enumerator object is returned.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* index - An array with the full index of the selected value.
-  #* posn - The position of the data in the low level data store.
+  # A specialized each variant that passes the low level data, the index
+  # and the position to the block.
   def _each_raw(&block)
     if block_given?
       process_all {|index, posn| block.call(index, posn)}
@@ -174,21 +101,8 @@ class FlexArray
     end
   end
 
-  #An enhanced specialized each variant that passes the low level data,
-  #the index and the position to the block.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* block - The optional block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, then an enumerator object is returned.
-  #<br>Returns
-  #* If the block is not present, then an enumerator object is returned.
-  #  Otherwise the flex array is returned.
-  #<br>Block Arguments
-  #* index - An array with the full index of the selected value.
-  #* posn - The position of the data in the low level data store.
+  # An enhanced specialized each variant that passes the low level data,
+  # the index and the position to the block.
   def _select_each_raw(indexes, &block)
     validate_index_count(indexes)
 
@@ -202,47 +116,21 @@ class FlexArray
 
   alias_method :flatten_collect, :collect
 
-  #The flex array version of collect that returns a flex array.
-  #<br>Parameters
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* An array of the computed objects retuned by the block.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The flex array version of collect that returns a flex array.
   def collect(&block)
     result = self.dup
     result.collect!(&block)
   end
 
-  #The flex array version of collect that accepts an optional set of indexes
-  #to select the data being collected into a flex array.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* An array of the computed objects retuned by the block.
-  #  If the block is not present, an enumerator object is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The flex array version of collect that accepts an optional set of indexes
+  # to select the data being collected into a flex array.
   def select_collect(indexes, &block)
     result = self.dup
     result.select_collect!(indexes, &block)
   end
 
-  #The flex array version of collect that accepts an optional set of indexes
-  #to select the data being collected into a standard array.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* block - The optional block to be executed for each selected array element.
-  #<br>Returns
-  #* An array of the computed objects retuned by the block.
-  #  If the block is not present, an enumerator object is returned.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The flex array version of collect that accepts an optional set of indexes
+  # to select the data being collected into a standard array.
   def select_flatten_collect(indexes, &block)
     validate_index_count(indexes)
 
@@ -255,15 +143,7 @@ class FlexArray
     end
   end
 
-  #The flex array version of collect!
-  #<br>Parameters
-  #* block - The *required* block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, an enumerator object is returned.
-  #<br>Returns
-  #* self
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The flex array version of collect!
   def collect!(&block)
     fail ArgumentError, "A block is required." unless block_given?
 
@@ -277,19 +157,8 @@ class FlexArray
     self
   end
 
-  #The enhanced flex array version of collect! that accepts a set of indexes
-  #to select the data being collected.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* block - The *required* block to be executed for each selected array element.
-  #  The return value is the last value returned by the block. If the block
-  #  is not present, an enumerator object is returned.
-  #<br>Returns
-  #* self
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The enhanced flex array version of collect! that accepts a set of indexes
+  # to select the data being collected.
   def select_collect!(indexes, &block)
     fail ArgumentError, "A block is required." unless block_given?
     validate_index_count(indexes)
@@ -300,17 +169,9 @@ class FlexArray
     self
   end
 
-  #The flex array version of find_index. This returns the
-  #coordinates of the first object that matches the search object or is
-  #flagged true by the search block.
-  #<br>Parameters
-  #* object - The optional value to search for.
-  #* block - The optional block to be executed for each selected array element.
-  #  If the block or object are not present, an enumerator object is returned.
-  #<br>Returns
-  #* The index of the first place that matched or nil if none matched.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The flex array version of find_index. This returns the coordinates of the
+  # first object that matches the search object or is flagged true by the
+  # search block.
   def find_index(value = nil, &block)
     blk = get_find_block(value, &block)
 
@@ -327,20 +188,9 @@ class FlexArray
     end
   end
 
-  #The enhanced flex array version of find_index. This returns the
-  #coordinates of the first object that matches the search object or is
-  #flagged true by the search block.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* object - The optional value to search for.
-  #* block - The optional block to be executed for each selected array element.
-  #  If the block or object are not present, an enumerator object is returned.
-  #<br>Returns
-  #* The index of the first place that matched or nil if none matched.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The enhanced flex array version of find_index. This returns the coordinates
+  # of the first object that matches the search object or is flagged true by
+  # the search block.
   def select_find_index(indexes, value = nil, &block)
     validate_index_count(indexes)
     blk = get_find_block(value, &block)
@@ -358,17 +208,9 @@ class FlexArray
     end
   end
 
-  #The improved flex array version of find_index. This returns the
-  #coordinates of objects that match the search object or are
-  #flagged true by the search block.
-  #<br>Parameters
-  #* object - The optional value to search for.
-  #* block - The optional block to be executed for each selected array element.
-  #  If the block or object are not present, an enumerator object is returned.
-  #<br>Returns
-  #* An array of the indexes of the places that matched.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The improved flex array version of find_index. This returns the coordinates
+  # of objects that match the search object or are flagged true by the search
+  # block.
   def find_indexes(value = nil, &block)
     blk, result = get_find_block(value, &block), []
 
@@ -385,20 +227,9 @@ class FlexArray
     end
   end
 
-  #The enhanced and improved flex array version of find_index. This returns the
-  #coordinates of objects that match the search object or are
-  #flagged true by the search block.
-  #<br>Parameters
-  #* indexes - An array with as many entries as the flexible array has
-  #  dimensions. See [] for more details. Note that since indexes is NOT
-  #  a splat parameter, it must be passed as an array explicitly.
-  #* object - The optional value to search for.
-  #* block - The optional block to be executed for each selected array element.
-  #  If the block or object are not present, an enumerator object is returned.
-  #<br>Returns
-  #* An array of the indexes of the places that matched.
-  #<br>Block Arguments
-  #* value - Each value selected by the iteration.
+  # The enhanced and improved flex array version of find_index. This returns
+  # the coordinates of objects that match the search object or are flagged true
+  # by the search block.
   def select_find_indexes(indexes, value = nil, &block)
     validate_index_count(indexes)
     blk, result = get_find_block(value, &block), []
@@ -418,11 +249,7 @@ class FlexArray
 
   private
 
-  #A helper method to determine which block to use in the find_index family.
-  #<br>Returns
-  #* The block to use or nil.
-  #<br>Endemic Code Smells
-  #* :reek:NilCheck
+  # A helper method to determine which block to use in the find_index family.
   def get_find_block(value, &block)
     if block_given?
       block
