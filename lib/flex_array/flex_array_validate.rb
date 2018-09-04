@@ -1,10 +1,7 @@
-#* flex_array_validate.rb - The flexible array class index validation routines.
+# Some flexible array class index validation routines.
+
 class FlexArray
-  #Is this array compatible with other?
-  #<br>Parameters
-  #* other - The object being tested for compatibility.
-  #<br>Returns
-  #* true if the arrays are compatible.
+  # Is this array compatible with other?
   def compatible?(other)
     @array_specs == other.array_specs
   rescue
@@ -13,11 +10,7 @@ class FlexArray
 
   private
 
-  #Validate the dimensionality of the indexes passed in.
-  #<br>Parameters
-  #* indexes - An array of indexes to be validated.
-  #<br>Exceptions
-  #* ArgumentError - raised on invalid dimensionality.
+  # Validate the dimensionality of the indexes passed in.
   def validate_index_count(indexes)
     unless indexes == [:all]
       if dimensions != indexes.length
@@ -26,9 +19,7 @@ class FlexArray
     end
   end
 
-  #Is this a valid dimension selector?
-  #<br>Exceptions
-  #* ArgumentError - raised on invalid dimension.
+  # Is this a valid dimension selector?
   def validate_dimension(dim)
     unless (0...dimensions) === dim
       fail ArgumentError, "Invalid dimension selector: #{dim}"
