@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'in_array'
 
   s.files       = `git ls-files`.split($/).select {|f| f !~ /^docs\//}
-  s.test_files  = s.files.grep(%r{^(test|spec|features)/})
+  s.test_files  = s.files.grep(%r{^(test)/})
 
   s.license = 'MIT'
   s.require_paths = ["lib"]
