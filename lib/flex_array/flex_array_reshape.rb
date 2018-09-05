@@ -18,6 +18,11 @@ class FlexArray
 
   # Convert the flex array to a simple array. Contained arrays are not affected.
   def to_a
-    @array_data.dup
+    if @transposed
+      fetch = self.cycle
+      Array.new(@array_data.length) { fetch.next }
+    else
+      @array_data.dup
+    end
   end
 end

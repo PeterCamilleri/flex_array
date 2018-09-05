@@ -2,7 +2,7 @@
 class FlexArray
   private
 
-  # Process a \FlexArray index array. This is the heart of the flex array
+  # Process a flex array index array. This is the heart of the flex array
   # indexing process.
   def process_indexes(indexes, &block)
     current = Array.new(dimensions, 0)

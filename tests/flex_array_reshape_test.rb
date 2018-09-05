@@ -59,5 +59,9 @@ class FlexArrayReshapeTester < Minitest::Test
     a = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2]]
     assert_equal(a, fa.to_a)
     assert(fa.array_data.object_id != fa.to_a.object_id)
+
+    fb = fa.transpose(0,1)
+    b = [[0,0],[1,0],[0,1],[1,1],[0,2],[1,2]]
+    assert_equal(b, fb.to_a)
   end
 end
