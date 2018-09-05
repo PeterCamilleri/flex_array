@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.version = FlexArray::VERSION
   s.author = ["Peter Camilleri"]
   s.email = "peter.c.camilleri@gmail.com"
-  s.homepage = "http://teuthida-technologies.com/"
+  s.homepage = "https://github.com/PeterCamilleri/flex_array"
   s.platform = Gem::Platform::RUBY
   s.required_ruby_version = '>=1.9.3'
 
