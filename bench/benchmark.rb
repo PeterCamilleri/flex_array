@@ -58,5 +58,22 @@ Benchmark.bmbm do |x|
     ct.times { FlexArray.new([s3,s3,s3,s3]) {"cat"} }
   }
 
+  src = Array.new(sz, "cat")
+
+  x.report("Flex 1d from:") {
+    ct.times { FlexArray.new_from(sz, src) }
+  }
+
+  x.report("Flex 2d from:") {
+    ct.times { FlexArray.new_from([s2,s2], src) }
+  }
+
+  x.report("Flex 3d from:") {
+    ct.times { FlexArray.new_from([s3,s3,s2], src) }
+  }
+
+  x.report("Flex 4d from:") {
+    ct.times { FlexArray.new_from([s3,s3,s3,s3], src) }
+  }
 end
 
