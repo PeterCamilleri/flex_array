@@ -7,10 +7,13 @@ puts "Ruby version      = #{RUBY_VERSION}"
 puts "FlexArray version = #{FlexArray::VERSION}"
 puts
 
-sz = 10000
-s2 = 100    # s2 * s2 == sz
-s3 = 10     # s3 * s3 * 2s == sz
-ct = 1000
+ct  = 1000
+
+sz  = 10000
+s2d = [100, 100]
+s3d = [10, 10, 100]
+s4d = [10, 10, 10, 10]
+s5d = [5, 5, 4, 10, 10]
 
 puts "Creating arrays:"
 puts "=============================================================================="
@@ -26,15 +29,19 @@ Benchmark.bmbm do |x|
   }
 
   x.report("Flex 2d obj:") {
-    ct.times { FlexArray.new([s2,s2], "cat") }
+    ct.times { FlexArray.new(s2d, "cat") }
   }
 
   x.report("Flex 3d obj:") {
-    ct.times { FlexArray.new([s3,s3,s2], "cat") }
+    ct.times { FlexArray.new(s3d, "cat") }
   }
 
   x.report("Flex 4d obj:") {
-    ct.times { FlexArray.new([s3,s3,s3,s3], "cat") }
+    ct.times { FlexArray.new(s4d, "cat") }
+  }
+
+  x.report("Flex 5d obj:") {
+    ct.times { FlexArray.new(s5d, "cat") }
   }
 
 
@@ -47,16 +54,21 @@ Benchmark.bmbm do |x|
   }
 
   x.report("Flex 2d blk:") {
-    ct.times { FlexArray.new([s2,s2]) {"cat"} }
+    ct.times { FlexArray.new(s2d) {"cat"} }
   }
 
   x.report("Flex 3d blk:") {
-    ct.times { FlexArray.new([s3,s3,s2]) {"cat"} }
+    ct.times { FlexArray.new(s3d) {"cat"} }
   }
 
   x.report("Flex 4d blk:") {
-    ct.times { FlexArray.new([s3,s3,s3,s3]) {"cat"} }
+    ct.times { FlexArray.new(s4d) {"cat"} }
   }
+
+  x.report("Flex 5d blk:") {
+    ct.times { FlexArray.new(s5d) {"cat"} }
+  }
+
 
   src = Array.new(sz, "cat")
 
@@ -65,15 +77,19 @@ Benchmark.bmbm do |x|
   }
 
   x.report("Flex 2d from:") {
-    ct.times { FlexArray.new_from([s2,s2], src) }
+    ct.times { FlexArray.new_from(s2d, src) }
   }
 
   x.report("Flex 3d from:") {
-    ct.times { FlexArray.new_from([s3,s3,s2], src) }
+    ct.times { FlexArray.new_from(s3d, src) }
   }
 
   x.report("Flex 4d from:") {
-    ct.times { FlexArray.new_from([s3,s3,s3,s3], src) }
+    ct.times { FlexArray.new_from(s4d, src) }
+  }
+
+  x.report("Flex 5d from:") {
+    ct.times { FlexArray.new_from(s5d, src) }
   }
 end
 
