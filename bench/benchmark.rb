@@ -7,7 +7,7 @@ puts "Ruby version      = #{RUBY_VERSION}"
 puts "FlexArray version = #{FlexArray::VERSION}"
 puts
 
-enable_creating_tests   = false
+enable_creating_tests   = true
 enable_accessing_tests  = true
 
 ct     = 1000
@@ -208,6 +208,31 @@ if enable_accessing_tests
     x.report("Flex 5d cysel:") {
       cyc = fa_5d.select_cycle(c5s)
       cyc_ct.times { temp += cyc.next }
+    }
+
+
+    x.report("Array []=:") {
+      ct.times { sz.times { |index| array[index] = 2.0 } }
+    }
+
+    x.report("Flex 1d []=:") {
+      ct.times { fa_1d[:all] = 2.0 }
+    }
+
+    x.report("Flex 2d []=:") {
+      ct.times { fa_2d[:all] = 2.0 }
+    }
+
+    x.report("Flex 3d []=:") {
+      ct.times { fa_3d[:all] = 2.0 }
+    }
+
+    x.report("Flex 4d []=:") {
+      ct.times { fa_4d[:all] = 2.0 }
+    }
+
+    x.report("Flex 5d []=:") {
+      ct.times { fa_5d[:all] = 2.0 }
     }
 
   end
