@@ -21,6 +21,7 @@ class FlexArray
   end
 
   # The worker bee for process_indexes.
+  # :reek:LongParameterList
   def process_indexes_worker(depth, posn, indexes, current, &block)
     if depth == dimensions                 # Is there more work to do?
       block.call(current, posn)            # Index ready, call the block.

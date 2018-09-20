@@ -1,0 +1,17 @@
+---
+
+### Generic smell configuration
+
+detectors:
+
+  TooManyStatements:
+    max_statements: 7
+
+  InstanceVariableAssumption:
+    enabled: false
+
+  TooManyMethods:
+    enabled: false
+
+  LongParameterList:
+    max_params: 3
