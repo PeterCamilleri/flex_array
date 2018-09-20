@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'reek', "~> 1.3.8"
+  s.add_development_dependency 'reek', "~> 5.0.2"
   s.add_development_dependency 'minitest', "~> 4.7.5"
   s.add_development_dependency 'minitest_visible', ">= 0.1.0"
 
