@@ -1,5 +1,4 @@
-lib/flex_array/flex_array_each.rb -- 3 warnings:
-  [256]:NilCheck: FlexArray#get_find_block performs a nil-check [https://github.com/troessner/reek/blob/v5.0.2/docs/Nil-Check.md]
+lib/flex_array/flex_array_each.rb -- 2 warnings:
   [178, 198, 217, 237]:RepeatedConditional: FlexArray tests 'blk' at least 4 times [https://github.com/troessner/reek/blob/v5.0.2/docs/Repeated-Conditional.md]
   [180, 200, 219, 239]:RepeatedConditional: FlexArray tests 'blk.call(@array_data[posn])' at least 4 times [https://github.com/troessner/reek/blob/v5.0.2/docs/Repeated-Conditional.md]
 lib/flex_array/spec_array.rb -- 1 warning:
@@ -7,4 +6,4 @@ lib/flex_array/spec_array.rb -- 1 warning:
 lib/flex_array.rb -- 2 warnings:
   [40]:Attribute: FlexArray#array_data is a writable attribute [https://github.com/troessner/reek/blob/v5.0.2/docs/Attribute.md]
   [37]:Attribute: FlexArray#array_specs is a writable attribute [https://github.com/troessner/reek/blob/v5.0.2/docs/Attribute.md]
-6 total warnings
+5 total warnings

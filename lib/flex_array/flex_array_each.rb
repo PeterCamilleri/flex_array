@@ -253,8 +253,6 @@ class FlexArray
   def get_find_block(value, &block)
     if block_given?
       block
-    elsif value.nil?
-      nil
     else
       lambda {|obj| obj == value }
     end
