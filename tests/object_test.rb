@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class ObjectTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_that_to_spec_component_fails
     obj = Object.new

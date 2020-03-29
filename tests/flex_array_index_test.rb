@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class FlexArrayIndexTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_that_it_indexes_correctly
     q1 = FlexArray.new([3, 3, 3]) {|i| i.dup}

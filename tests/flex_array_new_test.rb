@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class FlexArrayNewTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_the_new_method
     q1 = FlexArray.new(10, 0)

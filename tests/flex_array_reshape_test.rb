@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class FlexArrayReshapeTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_the_reshape_method
     ba1 = [[0,0], [0,1], [0,2], [0,3],

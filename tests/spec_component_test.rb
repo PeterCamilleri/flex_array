@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class SpecComponentTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def setup
     @lc = SpecComponent.new(1..5, 10)

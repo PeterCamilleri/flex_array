@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class FlexArrayTransposeTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_the_transpose_em_method
     f = FlexArray.new([3,3]) { |i| i[0]*3 + i[1] }

@@ -1,12 +1,8 @@
 require_relative '../lib/flex_array'
 gem              'minitest'
 require          'minitest/autorun'
-require          'minitest_visible'
 
 class ArrayTester < Minitest::Test
-
-  #Track mini-test progress.
-  include MinitestVisible
 
   def test_the_limits_method
     test = [1,2,3,4,5,6]
