@@ -2,5 +2,5 @@
 
 class FlexArray
   #The version string for flex array.
-  VERSION = "0.3.6".freeze
+  VERSION = "0.3.7".freeze
 end
